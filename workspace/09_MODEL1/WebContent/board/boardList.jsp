@@ -30,6 +30,14 @@
 		td:nth-of-type(3) { width: 100px; }
 		td:nth-of-type(4) { width: 100px; }
 		td:nth-of-type(5) { width: 100px; }
+		
+		.paging{
+			text-align:center;
+		}
+		.now_page{
+		color:blue;
+		
+		}
 	</style>
 </head>
 <body>
@@ -87,6 +95,37 @@
 					</tr>
 				</c:forEach>
 			</tbody>
+			<tfoot id="paging">
+				<tr>
+					<td colspan="5">
+						<%--이전 블록으로 이동  1블록은 이전블록이 없음--%>
+						<c:if test="${pageVO.beginPage lt pageVO.pagePerBlock }">
+							이전&nbsp;
+						
+						</c:if>
+						<c:if test="${pageVO.beginPage >= pageVO.pagePerBlock }">
+							<a href="/09_MODEL1/board/boardList.jsp?pagee=${pageVO.beginPage-1 }">이전&nbsp;</a>
+						</c:if>
+						<%--페이지 번호 --%>
+						<c:forEach var="page" begin="${pageVO.beginPage }" end="${pageVO.endPage }" step="1">
+							<c:if test="${pageVO.page eq page }">
+							<span class="now_page">${page }&nbsp;</span>
+							</c:if>
+							<c:if test="${pageVO.page ne page }">
+							<a href="/09_MODEL1/board/boardList.jsp?page=${page }">${page }&nbsp;</a> <%--현재 페이지는 클릭x --%>
+							</c:if>
+						</c:forEach>
+						<%--다음블록이동 마지막 블록은 다음이 없다.--%>
+						<c:if test="${pageVO.endPage<pageVO.totalPage }">
+							<a href="/09_MODEL1/board/boardList.jsp?page=${pageVO.endPage+1 }">다음&nbsp;</a>
+						</c:if>
+						<c:if test="${pageVO.endPage>=pageVO.totalPage }">
+							다음&nbsp;<%--링크안걸리는거 마지막블록 --%>
+						</c:if>
+					</td>
+				</tr>
+				
+			</tfoot>
 		</table>
 	</div>
 

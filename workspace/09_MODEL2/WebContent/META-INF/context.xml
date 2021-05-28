@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<Resource
+		name="jdbc/oracle"
+		type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
+		username="spring"
+		password="1111"
+		maxTotal="8"
+		maxIdle="2"
+		maxWaitMillis="5000"
+	/>
+		<!-- resource태그 주요속성
+			name : resource등록하는 이름
+			type : DBCP를 관리하는 자바 클래스
+			driverClassName : oracle jdbc
+			url : 서버경로
+			username/password : 정보
+			maxTotal = "최대 커넥션"
+			maxIdel 사용하지않는 커넥션의 최대갯수
+			maxWaitMillis : 최대 대기시간 ,음수이면 제한 x
+		
+		
+		 -->
+
+	
+</Context>
