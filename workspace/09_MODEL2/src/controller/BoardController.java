@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import command.member.MemberCommand;
+import command.board.BoardCommand;
 import common.ModelAndView;
 
 /**
- * Servlet implementation class MemberController
+ * Servlet implementation class BoardController
  */
-@WebServlet("*.m")
-public class MemberController extends HttpServlet {
+@WebServlet("*.b")
+public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberController() {
+    public BoardController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,24 +29,27 @@ public class MemberController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		//요청 확인 request.getReqeustURI() == "10_MODEL2/loginPage.m"
+		
 		String[] arr = request.getRequestURI().split("/");
 		String cmd = arr[arr.length-1];
-		//요청을 전달
-		MemberCommand command = MemberCommandMapper.getInstance().getCommand(cmd);
-		ModelAndView mav =null;
-		if(command !=null) {
+		
+		
+		
+		BoardCommand command = BoardCommandMapper.getInstance().getCommand(cmd);
+		ModelAndView mav = null;
+		if(command!=null) {
 			mav = command.execute(request, response);
 		}
-		if(mav==null) {
+		if(mav ==null) {
 			return;
 		}
 		if(mav.isRedirect()) {
 			response.sendRedirect(mav.getView());
 		}else {
-			request.getRequestDispatcher(mav.getView()).forward(request, response);
+			request.getRequestDispatcher(mav.getView()).forward(request,response);
 		}
 	}
 
