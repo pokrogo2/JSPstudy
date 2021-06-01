@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <% request.setCharacterEncoding("utf-8"); %>
 <jsp:include page="../layout/header.jsp">
-	<jsp:param value="게시글 작성" name="title" />
+	<jsp:param value="게시글 수정" name="title" />
 </jsp:include>
 
 <link rel="stylesheet" href="../assets/css/layout.css">
 <style>
-	.insert_form {
+	.update_form {
 		width: 600px;
 		margin: 0 auto;
 	}
@@ -46,15 +47,15 @@
 		
 		const f = $('#f');
 		const title = $('#title');
-		const insert_btn = $('#insert_btn');
-		insert_btn.click(function(){
-			if (title.val() == '') {
-				alert('제목은 필수입니다.');
-				title.focus();
-				return;
+		const content = $('#content');
+		const filename = $('#filename');
+		f.submit(function(event){
+			if (title.val() == '${param.title}' &&
+				content.val() == '${param.content}') {
+				alert('수정할 내용이 없습니다.');
+				event.preventDefault();
+				return false;
 			}
-			f.attr('action', '/09_MODEL2/insertBoard.b');
-			f.submit();
 		})
 		
 		const list_btn = $('#list_btn');
@@ -64,21 +65,25 @@
 		
 	})
 </script>
-<div class="insert_form">
+<div class="update_form">
 	
-	<form id="f" method="post" enctype="multipart/form-data">
-		<p class="title">작성자</p>
-		<input type="text" id="author" name="author" value="${loginDTO.id}" readonly><br><br>
+	<form action="/09_MODEL2/updateBoard.b" id="f" method="post" enctype="multipart/form-data">
 		<p class="title">제목</p>
-		<input type="text" id="title"  name="title" autofocus><br><br>
+		<input type="text" id="title" name="title" value="${param.title}"><br><br>
 		<p class="title">첨부</p>
-		<input type="file" id="filename" name="filename"><br><br>
+		<input type="file" id="filename" name="filename">&nbsp;&nbsp;&nbsp;
+		<c:if test="${empty param.filename}">
+			[기존 첨부파일: 없음]<br><br>
+		</c:if>
+		<c:if test="${not empty param.filename}">
+			[기존 첨부파일: ${param.filename}]<br><br>
+		</c:if>
 		<p class="content">내용</p>
-		<textarea id="content" name="content"></textarea><br><br>
-		<input type="hidden" name="ip" value="<%=request.getRemoteAddr()%>">
+		<textarea id="content" name="content">${param.content}</textarea><br><br>
+		<input type="hidden" name="idx" value="${param.idx}">
 		<div class="btns">
-			<input type="button" value="저장하기" class="btn" id="insert_btn">
-			<input type="reset" value="작성초기화" class="btn" id="reset_btn">
+			<button class="btn">수정하기</button>
+			<input type="reset" value="수정초기화" class="btn" id="reset_btn">
 			<input type="button" value="목록보기" class="btn" id="list_btn">
 		</div>
 	</form>
