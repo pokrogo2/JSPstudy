@@ -13,7 +13,7 @@ import common.Paging;
 import dao.BoardDAO;
 import dto.BoardDTO;
 
-public class FindBoardCommnad implements BoardCommand {
+public class FindBoardCommand implements BoardCommand {
 
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) {

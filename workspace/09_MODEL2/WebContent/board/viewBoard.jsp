@@ -50,7 +50,7 @@
 		<pre>${dto.content}</pre><br><br>	
 	</div>
 	<div class="board_img">
-		<img src="/10_MODEL2/archive/${dto.filename}" alt="첨부파일 이미지">
+		<img src="/09_MODEL2/archive/${dto.filename}" alt="첨부파일 이미지">
 	</div>
 </div>
 <div>
@@ -66,5 +66,24 @@
 		<input type="button" value="삭제하기" id="delete_btn">
 	</c:if>
 </div>
+
+<%-- 댓글 입력창 --%>
+<div class="reply_form">
+	<form action="/09_MODEL2/insertReply.b" method="post">
+		<input type="hidden" name="boardIdx" value="${dto.idx}"> 
+		<textarea name="content" placeholder="로그인을 하면 작성할 수 있습니다."></textarea>
+		<c:if test="${loginDTO != null}">
+			<button>작성하기</button>
+		</c:if>
+	</form>
+</div>
+
+<%-- 댓글 목록창 --%>
+<div class="reply_list">
+	댓글 ${replyCount}개
+</div>
+
+
+
 
 <%@ include file="../layout/footer.jsp" %>
