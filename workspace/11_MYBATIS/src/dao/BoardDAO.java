@@ -54,9 +54,54 @@ public class BoardDAO {
 	
 		
 		
+	/*4. 기존 댓글*/
+	public int incresGroupordPreviousReply(long groupno) {
+		SqlSession ss = factory.openSession(false); // 직접커밋 
+		int result = ss.update("mybatis.mapper.board.incresGroupordPreviousReply",groupno);
+		if(result>0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
+	/* 5. 댓글 삽입*/
+	public int insertReply(BoardDTO replyDTO) {
+		SqlSession ss=factory.openSession(false);
+		int result = ss.insert(NAMESPACE+".insertReply", replyDTO);
+		if(result >0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
+	
+	public int getFindRecordCount(Map<String,Object> map) {
+		SqlSession ss = factory.openSession();
+		int count = ss.selectOne(NAMESPACE + ".getFindRecordCount",map);
+		ss.close();
+		return count;
+	}
 		
-		
-		
-		
-		
+	public List<BoardDTO> findList(Map<String,Object> map){
+		SqlSession ss = factory.openSession();
+		List<BoardDTO> list = ss.selectList(NAMESPACE + ".findList",map);
+		ss.close();
+		return list;
+	}
+	public int delete(long no) {
+		SqlSession ss = factory.openSession(false);
+		int result = ss.delete(NAMESPACE + ".delete",no);
+		if(result>0) {
+			ss.commit();
+		}
+		ss.close();
+		return result;
+	}
+	/* 대댓글 목록 */
+	public List<BoardDTO> selectList3(Map<String, Integer> map) {
+		SqlSession ss = factory.openSession();
+		List<BoardDTO> list = ss.selectList("mybatis.mapper.board.selectList3", map);
+		ss.close();
+		return list;
+	}
 }

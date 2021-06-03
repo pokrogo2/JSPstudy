@@ -9,9 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import command.board.BoardCommand;
+import command.board.DeleteCommand;
+import command.board.FindListCommand;
 import command.board.InsertCommand;
 import command.board.InsertPageCommand;
-import command.board.SelectListCommand;
+import command.board.InsertReplyCommand;
+import command.board.InsertReplyPageCommand;
+import command.board.SelectListCommand1;
+import command.board.SelectListCommand2;
+import command.board.SelectListCommand3;
 import common.ModelAndView;
 
 /**
@@ -45,8 +51,14 @@ public class BoardController extends HttpServlet {
 		ModelAndView mav = null;
 		BoardCommand command = null;
 		switch(cmd) {
-		case "selectList.do":
-			command = new SelectListCommand();
+		case "selectList1.do":
+			command = new SelectListCommand1();
+			break;
+		case "selectList2.do":
+			command = new SelectListCommand2();
+			break;
+		case "selectList3.do":
+			command = new SelectListCommand3();
 			break;
 		case "insertPage.do":
 			command = new InsertPageCommand();
@@ -54,6 +66,19 @@ public class BoardController extends HttpServlet {
 		case "insert.do":
 			command = new InsertCommand();
 			break;
+		case "insertReplyPage.do":
+			command = new InsertReplyPageCommand();
+			break;
+		case "insertReply.do":
+			command = new InsertReplyCommand();
+			break;
+		case "findList.do":
+			command = new FindListCommand();
+			break;
+		case "delete.do":
+			command = new DeleteCommand();
+			break;
+	
 		}
 		if(command !=null) {
 			try {
