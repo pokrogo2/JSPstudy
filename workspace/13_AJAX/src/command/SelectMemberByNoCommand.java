@@ -18,7 +18,7 @@ public class SelectMemberByNoCommand implements MemberCommand {
 		// TODO Auto-generated method stub
 		
 		long no = Long.parseLong(request.getParameter("no"));
-		Member member = MemberDAO.getInstance().selectMemberList(no);
+		Member member = MemberDAO.getInstance().selectMemberByNo(no);
 		JSONObject obj = new JSONObject();
 		if(member !=null) {
 			obj.put("no",member.getNo());

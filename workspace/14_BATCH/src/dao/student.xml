@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- SQL 작성하는 곳 -->
+
+<!-- namespace는 mapper의 전체경로(패키지 포함)를 작성한다. -->
+<mapper namespace="dao.student">
+	<!-- <태그를 문자로 인삭하기 
+			<![CDATA[query]]>
+			쿼리를 모두 문자열로 인식하시오
+			SELECT SNO,NAME,KOR,ENG,MAT,AVE,GRADE
+	FROM STUDENT
+	WHERE<![CDATA[ AVE<60]]>
+	ORDER BY SNO
+	 -->
+	<select id = "selectStudentList" resultType="dto.StudentDTO">
+	
+	SELECT SNO,NAME,KOR,ENG,MAT,AVE,GRADE
+	FROM STUDENT
+
+	ORDER BY SNO
+	
+	<!-- 동적쿼리사용불가하니까 필요한부분만 -->
+	</select>
+	<insert id ="insertStudent" parameterType="dto.StudentDTO">
+		INSERT INTO STUDENT
+		VALUES (#{sno},#{name},${kor},${eng},${mat},${ave},#{grade})
+	
+	</insert>
+	<select id="top3StudentList" resultType="dto.StudentDTO">
+		SELECT ROWNUM, A.SNO, A.NAME, A.KOR, A.ENG, A.MAT, A.AVE, A.GRADE
+		  FROM (SELECT SNO, NAME, KOR, ENG, MAT, AVE, GRADE
+		          FROM STUDENT
+		         ORDER BY AVE DESC) A
+		 WHERE <![CDATA[ROWNUM <= 3]]>
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
